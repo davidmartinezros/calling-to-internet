@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.lepsec</groupId>
-	<artifactId>reactive-lrucache</artifactId>
+	<groupId>org.dmr</groupId>
+	<artifactId>calling-to-internet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>reactive-lrucache</name>
-	<description>Demo project for Spring Boot</description>
+	<name>calling-to-internet</name>
+	<description>Rest Service that call to an url to internet and response the content of the url</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
