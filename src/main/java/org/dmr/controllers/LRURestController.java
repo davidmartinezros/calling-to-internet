@@ -34,6 +34,13 @@ public class LRURestController {
         
     }
     
+    @RequestMapping(value = "/lru/getTagsFromGoogle", method = RequestMethod.POST)
+    public String getTagsFromGoogle(@RequestParam(name="tags") String... strings) {
+    	
+        return lruService.getTagsFromGoogle(strings);
+        
+    }
+    
     @RequestMapping(value = "/lru/getTagsOfContentUrl", method = RequestMethod.POST)
     public String getTagsOfContentUrl(@RequestParam(name="url") String string1, @RequestParam(name="tag") String string2) {
     	

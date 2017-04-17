@@ -1,0 +1,55 @@
+{
+	"variables": [],
+	"info": {
+		"name": "calling-to-internet",
+		"_postman_id": "5ab21cbc-3ca8-5f8b-acf7-3a23ffb117b6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/lru/state",
+			"request": {
+				"url": "http://{{server}}/api/lru/state",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "First Call to My Spring Boot Web Service Rest"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/lru/getContentUrl",
+			"request": {
+				"url": "http://{{server}}/api/lru/getContentUrl?url=https://www.bbva.es",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/api/lru/getTagsOfContentUrl",
+			"request": {
+				"url": "http://{{server}}/api/lru/getTagsOfContentUrl?url=http://davidmartinezros.com&tag=li",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/api/lru/getTagsFromGoogle",
+			"request": {
+				"url": "http://{{server}}/api/lru/getTagsFromGoogle?tags=angular",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

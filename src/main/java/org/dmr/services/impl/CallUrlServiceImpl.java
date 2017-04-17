@@ -3,8 +3,11 @@ package org.dmr.services.impl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -17,6 +20,8 @@ import org.dmr.domain.impl.CallUrlImpl;
 import org.dmr.services.CallUrlService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,6 +32,75 @@ public class CallUrlServiceImpl implements CallUrlService {
 	
     private CallUrl lru;
     private int nextKey;
+    
+    @Override
+    public String getTagsFromGoogle(final String... strings) {
+    	
+    	String result = "";
+    	
+    	StringBuilder builder = new StringBuilder();
+    	
+    	for(int i = 0; i< strings.length; i++) {
+    		
+    		String s = strings[i];
+    		
+    		if(i > 0) {
+    		
+    			builder.append("+");
+    		
+    		}
+    		
+    	    builder.append(s);
+    	}
+    	
+    	String google = "https://www.google.com/search?q=";
+    	String charset = "UTF-8";
+    	String userAgent = "David Martinez Ros (+http://davidmartinezros.com)";
+    	
+    	Elements links = null;
+    	
+    	try {
+    		links = Jsoup.connect(google + URLEncoder.encode(builder.toString(), charset)).userAgent(userAgent).get().select(".g>.r>a");
+    	} catch(IOException e) {
+    		e.printStackTrace();
+    	}
+
+    	for (int i = 0; i < links.size(); i++) {
+    		
+    		Element link = links.get(i);
+    		
+    	    String title = link.text();
+    	    String url = link.absUrl("href"); // Google returns URLs in format "http://www.google.com/url?q=<url>&sa=U&ei=<someKey>".
+    	    
+    	    try {
+    	    	url = URLDecoder.decode(url.substring(url.indexOf('=') + 1, url.indexOf('&')), charset);
+    	    } catch(UnsupportedEncodingException e) {
+    	    	e.printStackTrace();
+    	    }
+    	    
+    	    if (!url.startsWith("http")) {
+    	        continue; // Ads/news/etc.
+    	    }
+
+    	    System.out.println("Title: " + title);
+    	    System.out.println("URL: " + url);
+    	    
+    	    if(result.equals("")) {
+    	    	result += "{";
+    	    }
+    	    
+    	    result += "[" + title + "," + url + "]";
+    	    
+    	    if(i == links.size()-1) {
+    	    	result += "}";
+    	    } else {
+    	    	result += ",";
+    	    }
+    	}
+    	
+    	return result;
+    
+    }
     
     @Override
     public String getTagsOfContentUrl(final String string1, final String string2) {

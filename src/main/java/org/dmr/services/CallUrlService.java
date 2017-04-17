@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
  */
 public interface CallUrlService {
 	
+	String getTagsFromGoogle(final String... strings);
+	
 	String getTagsOfContentUrl(final String string, final String tag);
 	
 	String getContentUrl(String string);
