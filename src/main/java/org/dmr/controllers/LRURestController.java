@@ -28,18 +28,38 @@ public class LRURestController {
 
     @Autowired
     public LRURestController(CallUrlService lruService) {
+    	
         this.lruService = lruService;
         this.linkedHashMap = new LinkedHashMap<>();
+        
+    }
+    
+    @RequestMapping(value = "/lru/getTagsOfContentUrl", method = RequestMethod.POST)
+    public String getTagsOfContentUrl(@RequestParam(name="url") String string1, @RequestParam(name="tag") String string2) {
+    	
+        return lruService.getTagsOfContentUrl(string1, string2);
+        
+    }
+    
+    @RequestMapping(value = "/lru/getContentUrl", method = RequestMethod.POST)
+    public String getContentUrl(@RequestParam(name="url") String string) {
+    	
+        return lruService.getContentUrl(string);
+        
     }
 
     @RequestMapping(value = "/lru/add", method = RequestMethod.POST)
-    public int addStringInCache(@RequestParam String string){
+    public int addStringInCache(@RequestParam String string) {
+    	
         return lruService.addStringInLRU(string);
+        
     }
 
     @RequestMapping(value = "/lru/{key}")
     public String getStringByKey(@PathVariable int key) throws Exception {
+    	
         return lruService.getStringFromLRU(key);
+    
     }
 
     @RequestMapping(value = "/lru/state")
@@ -67,5 +87,7 @@ public class LRURestController {
         Thread.sleep(5000);
 
         return linkedHashMap;
+        
     }
+    
 }
